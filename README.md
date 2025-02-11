@@ -1,1 +1,1 @@
-Blog para los ejercicios de la asignatura de vision robotica del MUVA.
+Blog para los ejercicios de la asignatura de visión robótica del MUVA.
