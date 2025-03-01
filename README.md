@@ -16,7 +16,11 @@ Instalo y ejecuto el ejercicio de Unibotics en el Mac mini y va sin problemas a 
 - **Muestra la imagen procesada:** Superpone información en pantalla como la velocidad y el error de seguimiento.
 
 
-https://github.com/user-attachments/assets/0516b1ac-48db-4153-8364-cf8fffc1aff4
+
+
+https://github.com/user-attachments/assets/726b75f5-f423-4ac5-ad14-fff6adc08662
+
+
 
 
 
