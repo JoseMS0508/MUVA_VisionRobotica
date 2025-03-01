@@ -15,8 +15,9 @@ Instalo y ejecuto el ejercicio de Unibotics en el Mac mini y va sin problemas a 
 - **Controla la velocidad:** Reduce la velocidad en curvas y acelera en rectas para un movimiento más estable.
 - **Muestra la imagen procesada:** Superpone información en pantalla como la velocidad y el error de seguimiento.
 
-Llego a conseguir un tiempo de vuelta cercano a 1 minuto y 10 segundos aproximadamente. Se observa claramente que oscila bastante en curvas, que por momentos casi se pierde, y que en zonas donde la curva no es pronunciada podría aumentarse la velocidad hasta llegar a los 14 km/h.
-
 
 https://github.com/user-attachments/assets/0516b1ac-48db-4153-8364-cf8fffc1aff4
 
+
+
+Llego a conseguir un tiempo de vuelta cercano a 1 minuto y 10 segundos aproximadamente. Se observa claramente que oscila bastante en curvas, que por momentos casi se pierde, y que en zonas donde la curva no es pronunciada podría aumentarse la velocidad hasta llegar a los 14 km/h.
