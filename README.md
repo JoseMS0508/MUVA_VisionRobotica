@@ -13,7 +13,7 @@ Instalo y ejecuto el ejercicio de Unibotics en el Mac mini y va sin problemas a 
 - **Decide si es recta o curva:** Analiza la posición del centroide y la forma de la línea para determinar si el vehículo va en línea recta o está girando.
 - **Ajusta la dirección:** Utiliza dos controladores PID (uno para rectas y otro para curvas) para corregir la trayectoria y mantener el coche en la línea.
 - **Controla la velocidad:** Reduce la velocidad en curvas y acelera en rectas para un movimiento más estable.
-- **Muestra la imagen procesada:** Superpone información en pantalla como la velocidad y el error de seguimiento.
+- **Muestra la imagen procesada:** Superpone información en pantalla como la velocidad y el error de seguimiento entre otros.
 
 
 
@@ -22,6 +22,28 @@ https://github.com/user-attachments/assets/726b75f5-f423-4ac5-ad14-fff6adc08662
 
 
 
-
-
 Llego a conseguir un tiempo de vuelta cercano a 1 minuto y 10 segundos aproximadamente. Se observa claramente que oscila bastante en curvas, que por momentos casi se pierde, y que en zonas donde la curva no es pronunciada podría aumentarse la velocidad hasta llegar a los 14 km/h.
+
+
+## Día 3
+
+Empiezo a implementar el script que tenia en ackerman pero veo que no funciona y que hace cosas que estan bastante mal por lo que cambio de estrategia e implemento lo siguiente:
+
+1. Captura y Preprocesamiento de la Imagen
+
+Obtengo imágenes desde la cámara del robot, una vez adquirida la imagen, se recorta para enfocarse en la región de interés, limitando el área de análisis a la parte más logica de vision de la imagen, es decir, elimino la franja inferior y superior. Luego paso la imagen a HSV, ya que la detección de color en HSV es más robusta. Aplico filtros para detectar el color rojo mediante umbrales en HSV usando dos rangos para capturar tonos de rojo que pueden encontrarse en diferentes regiones del espectro HSV.
+
+Para mejorar la segmentación, aplico operaciones morfológicas (apertura y cierre) para eliminar ruido y cerrar pequeños huecos en caso de que hubiese por cualquier razon.
+
+
+2. Extracción de Características de la Línea
+
+Una vez generada la máscara binaria, extraigo contornos y selecciono el de mayor área como la línea principal a seguir con el findcontours. 
+Calculo el centroide de la línea para obtener la posición del robot respecto a la línea.
+Selecciono puntos en los bordes de línea para estimar la curvatura, y los uno para intentar asi ver si puedo adivinar si estoy en curva o no en funcion de sus angulos de union.
+
+![image](https://github.com/user-attachments/assets/8e82fe6e-88b7-445c-8f09-a0943d4a20d6)
+
+Como se ve en la imagen se estan formando angulos entre los dos extremos de la linea por lo que la media de los angulos, esta totalmente oscilando y pasando de curva a recta sin mucho sentido, como se ve en el video. Haciendo a su vez que el coche oscile totalmente.
+
+
