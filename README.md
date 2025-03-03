@@ -63,11 +63,24 @@ El componente integral acumula error con el tiempo, asi que en curvas, puede gen
 - Kd (Derivativo) aumenta en curvas:
 El término derivativo ayuda a amortiguar cambios bruscos, asi que en curvas, que el error cambia rápidamente, necesitaré un Kd más alto para evitar giros agresivos. Por lo que se aumenta en 120% en curvas pronunciadas con (1.0 + 1.2 × curvatura).
 
-El resultado de este código es el siguiente:
+El resultado de este código es el siguiente en curvas:
 
 
 
 https://github.com/user-attachments/assets/c3a9cae4-42ee-463e-a9ff-415e6e06fa0f
+
+
+
+
+Y el siguiente en rectas:
+
+
+https://github.com/user-attachments/assets/24ba596b-32be-4f07-974e-6b2ac49821b0
+
+
+Por lo que vemos que oscila mucho, y probablemente sea por el tema de la detección de la curva porque cuando esta mas con la linea en la zona lateral de la pantalla, los puntos y las líneas que lo unen parecen ser más rectas.
+
+
 
 
 
