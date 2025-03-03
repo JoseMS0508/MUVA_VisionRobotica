@@ -46,4 +46,29 @@ Selecciono puntos en los bordes de línea para estimar la curvatura, y los uno p
 
 Como se ve en la imagen se estan formando angulos entre los dos extremos de la linea por lo que la media de los angulos, esta totalmente oscilando y pasando de curva a recta sin mucho sentido, como se ve en el video. Haciendo a su vez que el coche oscile totalmente.
 
+3. Control del Robot con PID Adaptativo
+
+Calculo el error de seguimiento como la distancia del centroide de la línea al centro de la imagen, y el controlador PID varia en funcion de si esta en curvas y en rectas, es decir, el PID varia dinámicamente en función de la curvatura de la línea con este codigo:
+
+kp = KP_BASE * (1.0 + 0.8 * curvatura)
+ki = KI_BASE * (1.0 - 0.6 * curvatura)
+kd = KD_BASE * (1.0 + 1.2 * curvatura)
+
+- Kp (Proporcional) aumenta en curvas:
+Como el Kp influye en qué tan rápido el coche responde al error, en curvas, un Kp más alto mejora la capacidad de girar rápidamente sin desviarse demasiado, por tanto lo multiplico por (1.0 + 0.8 × curvatura), para que aumente hasta un 80% en curvas pronunciadas.
+
+- Ki (Integral) disminuye en curvas:
+El componente integral acumula error con el tiempo, asi que en curvas, puede generar inestabilidad si lo mantengo alto, ya que puede provocar un sobreajuste y oscilaciones, entonces la reduzco en 60% en curvas pronunciadas con (1.0 − 0.6 × curvatura).
+
+- Kd (Derivativo) aumenta en curvas:
+El término derivativo ayuda a amortiguar cambios bruscos, asi que en curvas, que el error cambia rápidamente, necesitaré un Kd más alto para evitar giros agresivos. Por lo que se aumenta en 120% en curvas pronunciadas con (1.0 + 1.2 × curvatura).
+
+El resultado de este código es el siguiente:
+
+
+
+https://github.com/user-attachments/assets/c3a9cae4-42ee-463e-a9ff-415e6e06fa0f
+
+
+
 
