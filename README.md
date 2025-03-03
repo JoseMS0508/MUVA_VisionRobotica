@@ -81,6 +81,13 @@ https://github.com/user-attachments/assets/24ba596b-32be-4f07-974e-6b2ac49821b0
 Por lo que vemos que oscila mucho, y probablemente sea por el tema de la detección de la curva porque cuando esta mas con la linea en la zona lateral de la pantalla, los puntos y las líneas que lo unen parecen ser más rectas.
 
 
+## Día 4
+
+Decido cambiar de nuevo el codigo que tenia porque creo que es demasiado enrevesado y me esta dando resultados un poco raros, y paso a algo mas sencillo. Detecto el centroide y calculo distancia a la linea central.
+
+
+
+https://github.com/user-attachments/assets/c1ad22d6-f742-47cf-8313-9e32e4aa96b9
 
 
 
