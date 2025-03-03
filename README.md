@@ -1,4 +1,4 @@
-# Blog para los ejercicios de la asignatura de visión robótica del MUVA
+# MUVA: VISIÓN ROBÓTICA. PRÁCICA 1
 
 ## Día 1
 
