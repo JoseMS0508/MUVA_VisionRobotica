@@ -90,5 +90,5 @@ Decido cambiar de nuevo el codigo que tenia porque creo que es demasiado enreves
 https://github.com/user-attachments/assets/c1ad22d6-f742-47cf-8313-9e32e4aa96b9
 
 
-
+Como vemos no gira bien asi que intento cambiar de estrategia.
 
