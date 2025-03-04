@@ -106,3 +106,13 @@ Ahora tras pensar que al conducir, nosotros simplemente frenamos y aceleramos (n
 https://github.com/user-attachments/assets/99eef041-b7b2-439f-a191-b0c9f410cb54
 
 
+
+Ahora he probado en otro circuito para ver lo robusto que es el controlador y el script de navegacion del coche y vemos que sigue sin oscilar demasiado y que mantiene velocidades aceptables pero al haber curvas mas cerradas, no consigo centrar el coche, aún poniendo que cuando tenga demasiado error la velocidad este cercana a cero.
+
+
+
+
+https://github.com/user-attachments/assets/cbc95651-6a84-4f0c-91bf-818e702ac05f
+
+
+
