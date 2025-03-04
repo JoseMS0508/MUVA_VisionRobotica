@@ -95,3 +95,14 @@ https://github.com/user-attachments/assets/c1ad22d6-f742-47cf-8313-9e32e4aa96b9
 
 Como vemos no gira bien asi que intento cambiar de estrategia.
 
+
+## Ackerman III
+
+Ahora tras pensar que al conducir, nosotros simplemente frenamos y aceleramos (no tenemos tendencia a arriesgar pensando: "Venga, voy a seguir conduciendo y voy a ver hasta qué punto manteniendo la velocidad de la recta actual tengo que girar el volante para poder coger esta curva...", que en cierta manera es el Kp, la intensidad de la reaccion ante el cambio del estímulo), establezco una estrategia que en funcion de la lejania del centroide de la linea respecto a la linea central de la imagen, voy reduciendo la velocidad: cuanto más lejos estoy, más aminoro) y he conseguido resultados por ahora bastante aceptables en mi opinión. Llego a dar una vuelta rondando los 360 segundos, en el circuito simple, sin oscilar, en mi opinión, ya que aunque se ve que se desplaza el centroide de la línea roja respecto de la línea central, cuando ves el coche desde fuera el coche sigue estando sobre la línea roja.
+
+
+
+
+https://github.com/user-attachments/assets/99eef041-b7b2-439f-a191-b0c9f410cb54
+
+
