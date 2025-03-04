@@ -26,7 +26,14 @@ Llego a conseguir un tiempo de vuelta cercano a 1 minuto y 10 segundos aproximad
 
 ## Holonómico III
 
-(--Falta por añadir)
+Modifico la Kp, del anterior, para hacerlo más suave y consigo que aunque aún por algunos tramos oscila, lo hace mucho menos que la versión anterior. Y consiguiendo la vuelta en 1min 10seg aprox.
+
+
+
+https://github.com/user-attachments/assets/269bc7d8-81ca-4cbd-aeb4-5e60e1d33d9c
+
+
+
 
 ## Ackerman I
 
