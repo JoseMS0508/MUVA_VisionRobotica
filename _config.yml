@@ -3,7 +3,7 @@ name: "Jose Maya Salas"
 description: "Máster Universitario en Visión Artificial - URJC - 2025"
 baseurl: ""  # No toques esto
 
-remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+remote_theme: "mmistakes/minimal-mistakes@4.19.3"
 
 plugins:
   - jekyll-feed
