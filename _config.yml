@@ -1,23 +1,20 @@
 title: "MUVA Vision Robótica"
 name: "Jose Maya Salas"
 description: "Máster Universitario en Visión Artificial - URJC - 2025"
-baseurl: ""  # No toques esto
+baseurl: ""
 
-remote_theme: "mmistakes/minimal-mistakes@4.19.3"
+theme: "jekyll-theme-minimal"
 
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
-  - jekyll-remote-theme
 
 markdown: kramdown
-theme: null
-minimal_mistakes_skin: "dark"
 
 defaults:
   - scope:
       path: ""
       type: "posts"
     values:
-      layout: single
-      author_profile: false
+      layout: default
+
