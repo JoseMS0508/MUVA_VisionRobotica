@@ -118,8 +118,67 @@ Ahora he probado en otro circuito para ver lo robusto que es el controlador y el
 
 
 
-
 https://github.com/user-attachments/assets/cbc95651-6a84-4f0c-91bf-818e702ac05f
 
+
+
+
+
+
+
+
+---
+title: "Práctica 2: Reconstrucción 3D Estéreo paso a paso"
+date: 2025-04-13
+categories: [Reconstrucción, Estéreo]
+tags: [Triangulación, Computer-Vision, HAL]
+layout: single
+author_profile: false
+---
+
+## ✨ Objetivo
+
+En esta práctica me propuse desarrollar un sistema básico de reconstrucción 3D utilizando visión estéreo. La idea era aplicar conceptos como la detección de bordes, búsqueda de correspondencias en líneas epipolares y triangulación, utilizando las herramientas proporcionadas por la API de HAL y la interfaz gráfica de GUI.
+
+---
+
+## 🧠 Enfoque general
+
+La reconstrucción se basa en el principio de que si se puede identificar un mismo punto en dos imágenes (izquierda y derecha), y se conoce la posición de las cámaras, entonces es posible calcular su posición 3D mediante geometría.
+
+El procedimiento lo dividí en tres grandes bloques:
+
+---
+
+### 1. Detección de puntos de interés (bordes)
+
+En lugar de buscar keypoints complejos (como SIFT o ORB), opté por una estrategia más controlada: usar Canny para detectar bordes y después filtrar los resultados con un suavizado bilateral. Esto me permite asegurar que solo trabajo con bordes significativos, evitando ruido.
+
+Selecciono puntos de borde de la imagen izquierda cada N píxeles para no sobrecargar el sistema, y además para mantener un rendimiento aceptable en la visualización.
+
+---
+
+### 2. Matching: búsqueda de correspondencias estéreo
+
+Para cada punto detectado en la imagen izquierda, busco su correspondencia en la imagen derecha, restringiendo la búsqueda a su línea epipolar (es decir, misma coordenada Y). Esto simplifica mucho el proceso y es coherente con la configuración estéreo horizontal.
+
+Uso correlación de ventanas (template matching) para comparar la región alrededor del punto en la imagen izquierda con diferentes posiciones en la derecha. Para evitar comparaciones innecesarias, solo lo hago sobre píxeles que también son bordes en la imagen derecha.
+
+Solo acepto una correspondencia si la similitud (correlación) supera un cierto umbral, lo que ayuda a descartar falsos positivos.
+
+---
+
+### 3. Triangulación y visualización
+
+Una vez tengo los puntos correspondientes en ambas imágenes, utilizo la API de HAL para:
+
+- Transformar las coordenadas gráficas en coordenadas ópticas
+- Obtener las retroproyecciones 3D desde cada cámara
+
+Con esto, genero dos rayos en el espacio (uno por cada cámara) y calculo su punto medio más cercano, asumiendo que la intersección exacta es poco probable debido al ruido. Este punto medio es el que tomo como resultado de la triangulación.
+
+Finalmente, añado cada punto a la nube de puntos 3D que se va mostrando con `GUI.ShowNewPoints()`. También dibujo las correspondencias con `GUI.showImageMatching()` para ir viendo el proceso.
+
+---
 
 
