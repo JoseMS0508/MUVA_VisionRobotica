@@ -1,13 +1,1 @@
-title: "MUVA Vision Robótica"
-name: "Jose Maya Salas"
-description: "Máster Universitario en Visión Artificial - URJC - 2025"
-baseurl: ""
-
-theme: jekyll-theme-minimal
-
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-
-markdown: kramdown
 
