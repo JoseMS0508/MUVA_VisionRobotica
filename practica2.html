@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUVA: VISIÓN ROBÓTICA. PRÁCTICA 2 - MUVA VISION ROBOTICA</title>
+    <meta name="description" content="Reconstrucción 3D basada en correspondencia estéreo y triangulación" />
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+    <div class="min-h-screen bg-gradient-to-br from-light-gray to-lighter-gray">
+      <!-- Header -->
+      <header class="py-10 bg-gradient-to-r from-primary to-primary-dark shadow-lg">
+        <div class="container mx-auto px-4">
+          <h1 class="text-3xl md:text-4xl font-bold text-white text-center">
+            BLOG MUVA VISION ROBOTICA
+          </h1>
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6 md:p-8 mx-auto max-w-4xl">
+          <button 
+            onclick="location.href='index.html';"
+            class="flex items-center text-primary font-medium mb-6 hover:text-primary-dark transition-colors"
+          >
+            <span class="mr-1">←</span>
+            <span>Volver al inicio</span>
+          </button>
+
+          <article class="prose prose-lg max-w-none" id="post-content">
+            <h1 class="text-3xl font-bold mt-10 mb-6 text-dark-blue">MUVA: VISIÓN ROBÓTICA. PRÁCTICA 2</h1>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4 text-dark-blue">Enfoque general</h2>
+            <p class="mb-4 text-gray-700">La reconstrucción se basa en el principio de que si se puede identificar un mismo punto en dos imágenes (izquierda y derecha), y se conoce la posición de las cámaras, entonces es posible calcular su posición 3D mediante geometría.</p>
+            <p class="mb-4 text-gray-700">El procedimiento lo dividí en tres grandes bloques:</p>
+
+            <h3 class="text-xl font-bold mt-6 mb-3 text-dark-blue">1. Detección de puntos de interés (bordes)</h3>
+            <p class="mb-4 text-gray-700">En lugar de buscar keypoints complejos (como SIFT o ORB), opté por una estrategia más controlada: usar Canny para detectar bordes y después filtrar los resultados con un suavizado bilateral. Esto me permite asegurar que solo trabajo con bordes significativos, evitando ruido.</p>
+            <p class="mb-4 text-gray-700">Selecciono puntos de borde de la imagen izquierda cada N píxeles para no sobrecargar el sistema, y además para mantener un rendimiento aceptable en la visualización.</p>
+
+            <div class="my-6">
+              <img src="https://github.com/user-attachments/assets/a078cb2a-c6e0-43e1-aaf8-94e6b7292766" class="rounded-lg shadow-md max-w-full h-auto" alt="Detección de bordes" />
+            </div>
+
+            <h3 class="text-xl font-bold mt-6 mb-3 text-dark-blue">2. Matching: búsqueda de correspondencias estéreo</h3>
+            <p class="mb-4 text-gray-700">Para cada punto detectado en la imagen izquierda, busco su correspondencia en la imagen derecha, restringiendo la búsqueda a su línea epipolar (es decir, misma coordenada Y). Esto simplifica mucho el proceso y es coherente con la configuración estéreo horizontal.</p>
+            <p class="mb-4 text-gray-700">Uso correlación de ventanas (template matching) para comparar la región alrededor del punto en la imagen izquierda con diferentes posiciones en la derecha. Para evitar comparaciones innecesarias, solo lo hago sobre píxeles que también son bordes en la imagen derecha.</p>
+            <p class="mb-4 text-gray-700">Solo acepto una correspondencia si la similitud (correlación) supera un cierto umbral (0.7), lo que ayuda a descartar falsos positivos.</p>
+
+            <div class="my-6">
+              <img src="https://github.com/user-attachments/assets/0acfabd8-ecac-423f-ad63-09e6f840131a" class="rounded-lg shadow-md max-w-full h-auto" alt="Correspondencias estéreo" />
+            </div>
+
+            <h3 class="text-xl font-bold mt-6 mb-3 text-dark-blue">3. Triangulación y visualización</h3>
+            <p class="mb-4 text-gray-700">Una vez tengo los puntos correspondientes en ambas imágenes, utilizo la API de HAL para:</p>
+            <ul class="pl-6 mb-4 list-disc text-gray-700">
+              <li class="mb-2">Transformar las coordenadas gráficas en coordenadas ópticas</li>
+              <li class="mb-2">Obtener las retroproyecciones 3D desde cada cámara</li>
+            </ul>
+            <p class="mb-4 text-gray-700">Con esto, genero dos rayos en el espacio (uno por cada cámara) y calculo su punto medio más cercano. Este punto medio es el que tomo como resultado de la triangulación.</p>
+            <p class="mb-4 text-gray-700">Finalmente, añado cada punto a la nube de puntos 3D que se va mostrando con <code>GUI.ShowNewPoints()</code>. También dibujo las correspondencias con <code>GUI.showImageMatching()</code> para ir viendo el proceso.</p>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/e49cc916-eb82-4964-9295-fa62aba788e9" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+          </article>
+        </div>
+      </main>
+      
+      <!-- Footer -->
+      <footer class="py-6 bg-dark-blue text-white mt-12">
+        <div class="container mx-auto px-4 text-center">
+          <p>© 2025 MUVA VISION ROBOTICA</p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
