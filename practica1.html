@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUVA: VISIÓN ROBÓTICA. PRÁCTICA 1 - MUVA VISION ROBOTICA</title>
+    <meta name="description" content="Implementación de controladores para seguimiento de línea en robots holonómicos y Ackerman" />
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+    <div class="min-h-screen bg-gradient-to-br from-light-gray to-lighter-gray">
+      <!-- Header -->
+      <header class="py-10 bg-gradient-to-r from-primary to-primary-dark shadow-lg">
+        <div class="container mx-auto px-4">
+          <h1 class="text-3xl md:text-4xl font-bold text-white text-center">
+            BLOG MUVA VISION ROBOTICA
+          </h1>
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6 md:p-8 mx-auto max-w-4xl">
+          <button 
+            onclick="location.href='index.html';"
+            class="flex items-center text-primary font-medium mb-6 hover:text-primary-dark transition-colors"
+          >
+            <span class="mr-1">←</span>
+            <span>Volver al inicio</span>
+          </button>
+
+          <article class="prose prose-lg max-w-none" id="post-content">
+            <h1 class="text-3xl font-bold mt-10 mb-6 text-dark-blue">MUVA: VISIÓN ROBÓTICA. PRÁCTICA 1</h1>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4 text-dark-blue">Holonómico I</h2>
+            <p class="mb-4 text-gray-700">Tras conseguir instalar y ejecutar el Docker en mi portátil, empiezo las primeras pruebas para el procesamiento de imagen. Haciendo una detección del rojo y calculando un centroide, en función de la posición del centroide de la línea roja respecto al centro de la imagen, voy implementando un controlador reactivo que fija la velocidad angular y la velocidad máxima para ir recto. Con estas primeras pruebas consigo estar cerca de los cuatro minutos. Tenía bastante bajas las velocidades e ir probando y consigo llegar a los 3 minutos.</p>
+            <p class="mb-4 text-gray-700">El portátil va bastante lento y se me hace problemático llevar a cabo la práctica a pesar de tener un i7 de 11ª generación y 16 GB de RAM; se me queda colgado cada dos por tres y tengo que estar reiniciando el Docker y entrando y saliendo de la web incluso con pequeños cambios de código. Considero para el próximo día de trabajo usar el Mac mini M2 Pro que tengo para ver si ahí consigo que vaya mejor.</p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4 text-dark-blue">Holonómico II</h2>
+            <p class="mb-4 text-gray-700">Instalo y ejecuto el ejercicio de Unibotics en el Mac mini y va sin problemas a pesar de los fallos de conexión puntuales del Docker y los reinicios que tengo que hacer del mismo. En este momento, paso a cambiar a un controlador PID. El script realiza lo siguiente:</p>
+            <ul class="pl-6 mb-4 list-disc text-gray-700">
+              <li class="mb-2"><strong>Procesa la imagen:</strong> Detecta la línea roja en la parte central de la imagen y obtiene su centroide.</li>
+              <li class="mb-2"><strong>Decide si es recta o curva:</strong> Analiza la posición del centroide y la forma de la línea para determinar si el vehículo va en línea recta o está girando.</li>
+              <li class="mb-2"><strong>Ajusta la dirección:</strong> Utiliza dos controladores PID (uno para rectas y otro para curvas) para corregir la trayectoria y mantener el coche en la línea.</li>
+              <li class="mb-2"><strong>Controla la velocidad:</strong> Reduce la velocidad en curvas y acelera en rectas para un movimiento más estable.</li>
+              <li class="mb-2"><strong>Muestra la imagen procesada:</strong> Muestra información en pantalla como la velocidad y el error de seguimiento entre otros.</li>
+            </ul>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/726b75f5-f423-4ac5-ad14-fff6adc08662" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+
+            <p class="mb-4 text-gray-700">Llego a conseguir un tiempo de vuelta cercano a 1 minuto y 10 segundos aproximadamente. Se observa claramente que oscila bastante en curvas, que por momentos casi se pierde, y que en zonas donde la curva no es pronunciada podría aumentarse la velocidad hasta llegar a los 14 km/h.</p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4 text-dark-blue">Holonómico III</h2>
+            <p class="mb-4 text-gray-700">Modifico la Kp, del anterior, para hacerlo más suave y consigo que aunque aún por algunos tramos oscila, lo hace mucho menos que la versión anterior. Y consiguiendo la vuelta en 1min 10seg aprox.</p>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/269bc7d8-81ca-4cbd-aeb4-5e60e1d33d9c" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4 text-dark-blue">Ackerman I</h2>
+            <p class="mb-4 text-gray-700">Empiezo a implementar el script que tenia en ackerman pero veo que no funciona y que hace cosas que estan bastante mal por lo que cambio de estrategia e implemento lo siguiente:</p>
+
+            <p class="mb-4 text-gray-700">1. Captura y Preprocesamiento de la Imagen</p>
+            <p class="mb-4 text-gray-700">Obtengo imágenes desde la cámara del robot, una vez adquirida la imagen, se recorta para enfocarse en la región de interés, limitando el área de análisis a la parte más logica de vision de la imagen, es decir, elimino la franja inferior y superior. Luego paso la imagen a HSV, ya que la detección de color en HSV es más robusta. Aplico filtros para detectar el color rojo mediante umbrales en HSV usando dos rangos para capturar tonos de rojo que pueden encontrarse en diferentes regiones del espectro HSV.</p>
+            <p class="mb-4 text-gray-700">Para mejorar la segmentación, aplico operaciones morfológicas (apertura y cierre) para eliminar ruido y cerrar pequeños huecos en caso de que hubiese por cualquier razon.</p>
+
+            <p class="mb-4 text-gray-700">2. Extracción de Características de la Línea</p>
+            <p class="mb-4 text-gray-700">Una vez generada la máscara binaria, extraigo contornos y selecciono el de mayor área como la línea principal a seguir con el findcontours. Calculo el centroide de la línea para obtener la posición del robot respecto a la línea. Selecciono puntos en los bordes de línea para estimar la curvatura, y los uno para intentar asi ver si puedo adivinar si estoy en curva o no en funcion de sus angulos de union.</p>
+
+            <div class="my-6">
+              <img src="https://github.com/user-attachments/assets/8e82fe6e-88b7-445c-8f09-a0943d4a20d6" class="rounded-lg shadow-md max-w-full h-auto" alt="Ackerman I" />
+            </div>
+
+            <p class="mb-4 text-gray-700">Como se ve en la imagen se estan formando angulos entre los dos extremos de la linea por lo que la media de los angulos, esta totalmente oscilando y pasando de curva a recta sin mucho sentido, como se ve en el video. Haciendo a su vez que el coche oscile totalmente.</p>
+
+            <p class="mb-4 text-gray-700">3. Control del Robot con PID Adaptativo</p>
+            <p class="mb-4 text-gray-700">Calculo el error de seguimiento como la distancia del centroide de la línea al centro de la imagen, y el controlador PID varia en funcion de si esta en curvas y en rectas, es decir, el PID varia dinámicamente en función de la curvatura de la línea con este codigo:</p>
+
+            <pre class="bg-gray-100 rounded px-4 py-3 my-4 overflow-x-auto font-mono text-sm">
+kp = KP_BASE * (1.0 + 0.8 * curvatura)
+ki = KI_BASE * (1.0 - 0.6 * curvatura)
+kd = KD_BASE * (1.0 + 1.2 * curvatura)
+            </pre>
+
+            <ul class="pl-6 mb-4 list-disc text-gray-700">
+              <li class="mb-2"><strong>Kp (Proporcional) aumenta en curvas:</strong> Como el Kp influye en qué tan rápido el coche responde al error, en curvas, un Kp más alto mejora la capacidad de girar rápidamente sin desviarse demasiado, por tanto lo multiplico por (1.0 + 0.8 × curvatura), para que aumente hasta un 80% en curvas pronunciadas.</li>
+              <li class="mb-2"><strong>Ki (Integral) disminuye en curvas:</strong> El componente integral acumula error con el tiempo, asi que en curvas, puede generar inestabilidad si lo mantengo alto, ya que puede provocar un sobreajuste y oscilaciones, entonces la reduzco en 60% en curvas pronunciadas con (1.0 − 0.6 × curvatura).</li>
+              <li class="mb-2"><strong>Kd (Derivativo) aumenta en curvas:</strong> El término derivativo ayuda a amortiguar cambios bruscos, asi que en curvas, que el error cambia rápidamente, necesitaré un Kd más alto para evitar giros agresivos. Por lo que se aumenta en 120% en curvas pronunciadas con (1.0 + 1.2 × curvatura).</li>
+            </ul>
+
+            <p class="mb-4 text-gray-700">El resultado de este código es el siguiente en curvas:</p>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/c3a9cae4-42ee-463e-a9ff-415e6e06fa0f" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+
+            <p class="mb-4 text-gray-700">Y el siguiente en rectas:</p>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/24ba596b-32be-4f07-974e-6b2ac49821b0" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+
+            <p class="mb-4 text-gray-700">Por lo que vemos que oscila mucho, y probablemente sea por el tema de la detección de la curva porque cuando esta mas con la linea en la zona lateral de la pantalla, los puntos y las líneas que lo unen parecen ser más rectas.</p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4 text-dark-blue">Ackerman II</h2>
+            <p class="mb-4 text-gray-700">Decido cambiar de nuevo el codigo que tenia porque creo que es demasiado enrevesado y me esta dando resultados un poco raros, y paso a algo mas sencillo. Detecto el centroide y calculo distancia a la linea central.</p>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/c1ad22d6-f742-47cf-8313-9e32e4aa96b9" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+
+            <p class="mb-4 text-gray-700">Como vemos no gira bien asi que intento cambiar de estrategia.</p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4 text-dark-blue">Ackerman III</h2>
+            <p class="mb-4 text-gray-700">Ahora tras pensar que al conducir, nosotros simplemente frenamos y aceleramos (no tenemos tendencia a arriesgar pensando: "Venga, voy a seguir conduciendo y voy a ver hasta qué punto manteniendo la velocidad de la recta actual tengo que girar el volante para poder coger esta curva...", que en cierta manera es el Kp, la intensidad de la reaccion ante el cambio del estímulo), establezco una estrategia que en funcion de la lejania del centroide de la linea respecto a la linea central de la imagen, voy reduciendo la velocidad: cuanto más lejos estoy, más aminoro) y he conseguido resultados por ahora bastante aceptables en mi opinión. Llego a dar una vuelta rondando los 360 segundos, en el circuito simple, sin oscilar, en mi opinión, ya que aunque se ve que se desplaza el centroide de la línea roja respecto de la línea central, cuando ves el coche desde fuera el coche sigue estando sobre la línea roja.</p>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/99eef041-b7b2-439f-a191-b0c9f410cb54" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+
+            <p class="mb-4 text-gray-700">Ahora he probado en otro circuito para ver lo robusto que es el controlador y el script de navegacion del coche y vemos que sigue sin oscilar demasiado y que mantiene velocidades aceptables pero al haber curvas mas cerradas, no consigo centrar el coche, aún poniendo que cuando tenga demasiado error la velocidad este cercana a cero.</p>
+
+            <div class="my-6">
+              <video controls class="rounded-lg shadow-md w-full">
+                <source src="https://github.com/user-attachments/assets/cbc95651-6a84-4f0c-91bf-818e702ac05f" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
+            </div>
+          </article>
+        </div>
+      </main>
+      
+      <!-- Footer -->
+      <footer class="py-6 bg-dark-blue text-white mt-12">
+        <div class="container mx-auto px-4 text-center">
+          <p>© 2025 MUVA VISION ROBOTICA</p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
