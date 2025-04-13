@@ -132,12 +132,7 @@ https://github.com/user-attachments/assets/cbc95651-6a84-4f0c-91bf-818e702ac05f
 # MUVA: VISIÓN ROBÓTICA. PRÁCTICA 2
 
 
-##  Objetivo
-
-En esta práctica me propuse desarrollar un sistema básico de reconstrucción 3D utilizando visión estéreo. La idea era aplicar conceptos como la detección de bordes, búsqueda de correspondencias en líneas epipolares y triangulación, utilizando las herramientas proporcionadas por la API de HAL y la interfaz gráfica de GUI.
-
-
-## 🧠 Enfoque general
+## Enfoque general
 
 La reconstrucción se basa en el principio de que si se puede identificar un mismo punto en dos imágenes (izquierda y derecha), y se conoce la posición de las cámaras, entonces es posible calcular su posición 3D mediante geometría.
 
@@ -159,7 +154,7 @@ Para cada punto detectado en la imagen izquierda, busco su correspondencia en la
 
 Uso correlación de ventanas (template matching) para comparar la región alrededor del punto en la imagen izquierda con diferentes posiciones en la derecha. Para evitar comparaciones innecesarias, solo lo hago sobre píxeles que también son bordes en la imagen derecha.
 
-Solo acepto una correspondencia si la similitud (correlación) supera un cierto umbral, lo que ayuda a descartar falsos positivos.
+Solo acepto una correspondencia si la similitud (correlación) supera un cierto umbral (0.7), lo que ayuda a descartar falsos positivos.
 
 ![image](https://github.com/user-attachments/assets/0acfabd8-ecac-423f-ad63-09e6f840131a)
 
@@ -171,7 +166,7 @@ Una vez tengo los puntos correspondientes en ambas imágenes, utilizo la API de 
 - Transformar las coordenadas gráficas en coordenadas ópticas
 - Obtener las retroproyecciones 3D desde cada cámara
 
-Con esto, genero dos rayos en el espacio (uno por cada cámara) y calculo su punto medio más cercano, asumiendo que la intersección exacta es poco probable debido al ruido. Este punto medio es el que tomo como resultado de la triangulación.
+Con esto, genero dos rayos en el espacio (uno por cada cámara) y calculo su punto medio más cercano. Este punto medio es el que tomo como resultado de la triangulación.
 
 Finalmente, añado cada punto a la nube de puntos 3D que se va mostrando con `GUI.ShowNewPoints()`. También dibujo las correspondencias con `GUI.showImageMatching()` para ir viendo el proceso.
 
