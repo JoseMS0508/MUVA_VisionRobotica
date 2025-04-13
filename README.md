@@ -128,15 +128,10 @@ https://github.com/user-attachments/assets/cbc95651-6a84-4f0c-91bf-818e702ac05f
 
 
 ---
-title: "Práctica 2: Reconstrucción 3D Estéreo paso a paso"
-date: 2025-04-13
-categories: [Reconstrucción, Estéreo]
-tags: [Triangulación, Computer-Vision, HAL]
-layout: single
-author_profile: false
+# MUVA: VISIÓN ROBÓTICA. PRÁCTICA 2
 ---
 
-## ✨ Objetivo
+##  Objetivo
 
 En esta práctica me propuse desarrollar un sistema básico de reconstrucción 3D utilizando visión estéreo. La idea era aplicar conceptos como la detección de bordes, búsqueda de correspondencias en líneas epipolares y triangulación, utilizando las herramientas proporcionadas por la API de HAL y la interfaz gráfica de GUI.
 
