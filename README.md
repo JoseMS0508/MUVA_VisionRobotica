@@ -26,6 +26,7 @@ Llego a conseguir un tiempo de vuelta cercano a 1 minuto y 10 segundos aproximad
 
 ## Holonómico III
 
+
 Modifico la Kp, del anterior, para hacerlo más suave y consigo que aunque aún por algunos tramos oscila, lo hace mucho menos que la versión anterior. Y consiguiendo la vuelta en 1min 10seg aprox.
 
 
@@ -127,15 +128,14 @@ https://github.com/user-attachments/assets/cbc95651-6a84-4f0c-91bf-818e702ac05f
 
 
 
----
+
 # MUVA: VISIÓN ROBÓTICA. PRÁCTICA 2
----
+
 
 ##  Objetivo
 
 En esta práctica me propuse desarrollar un sistema básico de reconstrucción 3D utilizando visión estéreo. La idea era aplicar conceptos como la detección de bordes, búsqueda de correspondencias en líneas epipolares y triangulación, utilizando las herramientas proporcionadas por la API de HAL y la interfaz gráfica de GUI.
 
----
 
 ## 🧠 Enfoque general
 
@@ -143,7 +143,6 @@ La reconstrucción se basa en el principio de que si se puede identificar un mis
 
 El procedimiento lo dividí en tres grandes bloques:
 
----
 
 ### 1. Detección de puntos de interés (bordes)
 
@@ -151,7 +150,8 @@ En lugar de buscar keypoints complejos (como SIFT o ORB), opté por una estrateg
 
 Selecciono puntos de borde de la imagen izquierda cada N píxeles para no sobrecargar el sistema, y además para mantener un rendimiento aceptable en la visualización.
 
----
+
+![Captura de pantalla 2025-04-13 195526](https://github.com/user-attachments/assets/a078cb2a-c6e0-43e1-aaf8-94e6b7292766)
 
 ### 2. Matching: búsqueda de correspondencias estéreo
 
@@ -161,7 +161,8 @@ Uso correlación de ventanas (template matching) para comparar la región alrede
 
 Solo acepto una correspondencia si la similitud (correlación) supera un cierto umbral, lo que ayuda a descartar falsos positivos.
 
----
+![image](https://github.com/user-attachments/assets/0acfabd8-ecac-423f-ad63-09e6f840131a)
+
 
 ### 3. Triangulación y visualización
 
@@ -174,6 +175,9 @@ Con esto, genero dos rayos en el espacio (uno por cada cámara) y calculo su pun
 
 Finalmente, añado cada punto a la nube de puntos 3D que se va mostrando con `GUI.ShowNewPoints()`. También dibujo las correspondencias con `GUI.showImageMatching()` para ir viendo el proceso.
 
----
+
+https://github.com/user-attachments/assets/e49cc916-eb82-4964-9295-fa62aba788e9
+
+
 
 
