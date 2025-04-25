@@ -266,8 +266,8 @@ html,body{height:100%}
 }
 /* imagen izquierda */
 .card__img{
-  width:140px;
-  height:140px;
+  width:280px;
+  height:280px;
   object-fit:cover;
   border-top-left-radius:var(--radius);
   border-bottom-left-radius:var(--radius);
