@@ -237,7 +237,7 @@ html,body{height:100%}
   top:50%;
   width:120px;               /* ajusta si lo ves necesario */
   transform:translateY(-50%);
-  opacity:.25;               /* semitransparencia */
+  opacity:.85;               /* semitransparencia */
 }
 .header-img--left{left:1rem}
 .header-img--right{right:1rem}
