@@ -224,11 +224,12 @@ html,body{height:100%}
   box-shadow:var(--shadow);
 }
 .header-title{
-  font-family:"Kaushan Script",cursive;
+  font-family:"Notable", sans-serif;   /* ahora sí tu nueva fuente */
   font-size:clamp(2rem,4vw,3rem);
   color:#fff;
   position:relative;
-  z-index:1;                 /* por delante de las imágenes */
+  z-index:1;
+  letter-spacing:1px;                  /* opcional: ajusta separación */
 }
 /* imágenes laterales */
 .header-img{
