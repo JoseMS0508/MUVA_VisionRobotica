@@ -352,6 +352,15 @@ body{
   margin-right:auto;
 }
 
+.video-half{
+  width:50%;           /* la mitad del ancho original            */
+  height:auto;         /* mantiene la proporción                  */
+  max-width:100%;      /* nunca sobrepasa el contenedor           */
+  display:block;       /* para centrarlo fácilmente               */
+  margin-left:auto;
+  margin-right:auto;
+}
+
 .prose h1,
 .prose h2,
 .prose h3 {
